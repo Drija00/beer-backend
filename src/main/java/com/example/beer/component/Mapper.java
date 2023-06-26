@@ -1,18 +1,18 @@
 package com.example.beer.component;
 
-import com.example.beer.model.Beer;
-import com.example.beer.model.BeerDTO;
-import com.example.beer.model.User;
-import com.example.beer.model.UserDTO;
+import com.example.beer.model.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class Mapper {
     public BeerDTO toDto(Beer b) {
         return new BeerDTO(b.getId(), b.getName(),b.getTagline(),b.getDescription(),b.getImageUrl(),b.getPrice(),b.getFoodPairing());
+    }
+
+    public ReceiptDTO toDto(Receipt r) {
+        return new ReceiptDTO(r.getId(),r.getUserID(),r.getDate(),r.getTotalPrice(),r.getBeerIDs());
     }
 
     public UserDTO toDto(User u) {

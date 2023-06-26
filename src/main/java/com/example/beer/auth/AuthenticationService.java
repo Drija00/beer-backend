@@ -29,7 +29,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .decriptedPass(request.getPassword())
-                .role(Role.ADMIN)
+                .role(Role.USER)
                 .build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
@@ -49,10 +49,12 @@ public class AuthenticationService {
         );
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        user.setRole(Role.ADMIN);
+        var savedUser = repository.save(user);
         //System.out.println(user);
-        var jwtToken = jwtService.generateToken(user);
-        revokeAllUserTokens(user);
-        saveUserToken(user, jwtToken);
+        var jwtToken = jwtService.generateToken(savedUser);
+        revokeAllUserTokens(savedUser);
+        saveUserToken(savedUser, jwtToken);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .build();

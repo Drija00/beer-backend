@@ -3,6 +3,7 @@ package com.example.beer.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,5 +31,7 @@ public class Receipt {
     private Date date = new Date();
     private double totalPrice;
     @ElementCollection
-    private List<Integer> beerIDs;
+    private List<Long> beerIDs;
+    @Transient
+    private List<ReceiptItem> items;
 }

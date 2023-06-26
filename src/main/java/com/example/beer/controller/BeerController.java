@@ -40,6 +40,14 @@ public class BeerController {
         }
         return null;
     }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @DeleteMapping("/delete/{id}")
+    @ResponseBody
+    public void deleteBeer(@PathVariable Long id) {
+        System.out.println("USLOOO  "+id);
+        service.getBeerRepository().deleteById(id);
+        System.out.println("DELETED BEER ON ID: "+id);
+    }
 
 
 
