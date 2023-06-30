@@ -1,5 +1,6 @@
 package com.example.beer.service;
 
+import com.example.beer.model.Beer;
 import org.springframework.stereotype.Service;
 import com.example.beer.repository.BeerRepository;
 
@@ -14,4 +15,6 @@ public class BeerService {
     public BeerRepository getBeerRepository() {
         return beerRepository;
     }
+
+    public Beer addBeer(Beer beer){return beerRepository.save(beer);}
 }

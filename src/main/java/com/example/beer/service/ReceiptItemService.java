@@ -24,4 +24,8 @@ public class ReceiptItemService {
     public List<ReceiptItem> getReceiptItems(){
         return receiptItemRepository.findAll();
     }
+
+    public List<ReceiptItem> getReceiptItemsByReceiptID(Long id){
+        return receiptItemRepository.findAllByReceiptID(id);
+    }
 }

@@ -30,8 +30,6 @@ public class Receipt {
     private Long userID;
     private Date date = new Date();
     private double totalPrice;
-    @ElementCollection
-    private List<Long> beerIDs;
     @Transient
     private List<ReceiptItem> items;
 }

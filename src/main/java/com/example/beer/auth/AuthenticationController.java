@@ -18,11 +18,12 @@ public class AuthenticationController {
 
     private final AuthenticationService service;
     private final UserService userService;
-
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) {
+        System.out.println(request.toString());
         return ResponseEntity.ok(service.register(request));
     }
     @PostMapping("/authenticate")

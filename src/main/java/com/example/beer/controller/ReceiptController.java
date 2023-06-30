@@ -4,6 +4,7 @@ import com.example.beer.component.Mapper;
 import com.example.beer.model.Receipt;
 import com.example.beer.model.ReceiptDTO;
 import com.example.beer.model.ReceiptItem;
+import com.example.beer.model.ReceiptItemDTO;
 import com.example.beer.service.ReceiptItemService;
 import com.example.beer.service.ReceiptService;
 import org.springframework.web.bind.annotation.*;
@@ -26,22 +27,34 @@ public class ReceiptController {
         this.mapper = mapper;
     }
 
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @PostMapping("/add-receipt")
+//    public Receipt addReceipt(@RequestParam Long userID,
+//                              @RequestParam double totalPrice,
+//                              @RequestParam List<ReceiptItemDTO> items){
+//        Receipt receipt = new Receipt();
+//        receipt.setUserID(userID);
+//        receipt.setTotalPrice(totalPrice);
+//        receipt.setDate(new Date());
+//        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+items);
+//        //receipt.setBeerIDs(beerIDs);
+//        //System.out.println(items);
+////        for(ReceiptItem item:items){
+////            item.setReceiptID(receipt1.getId());
+////            item.toString();
+////        }
+//        return receiptService.addReceipt(receipt);
+//    }
+
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/add-receipt")
-    public Receipt addReceipt(@RequestParam Long userID,
-                              @RequestParam double totalPrice,
-                              @RequestParam List<Long> beerIDs){
-        Receipt receipt = new Receipt();
-        receipt.setUserID(userID);
-        receipt.setTotalPrice(totalPrice);
-        receipt.setDate(new Date());
-        receipt.setBeerIDs(beerIDs);
-        //System.out.println(items);
-//        for(ReceiptItem item:items){
-//            item.setReceiptID(receipt1.getId());
-//            item.toString();
-//        }
-        return receiptService.addReceipt(receipt);
+    public Receipt addReceipt(@RequestBody Receipt receipt){
+        Receipt receiptFinal = receiptService.addReceipt(receipt);
+        for(ReceiptItem item:receipt.getItems()){
+            item.setReceiptID(receiptFinal.getId());
+            receiptItemService.addReceiptItem(item);
+        }
+        return receiptFinal;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -55,10 +68,12 @@ public class ReceiptController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/receipts")
-    public List<ReceiptDTO> getReceipts(){
-        return receiptService.getReceipts().stream()
-                .map(mapper::toDto)
-                .collect(toList());
+    public List<Receipt> getReceipts(){
+        List<Receipt> receipts= receiptService.getReceipts();
+        for (Receipt receipt : receipts){
+            receipt.setItems(receiptItemService.getReceiptItemsByReceiptID(receipt.getId()));
+        }
+        return receipts;
     }
 
     @CrossOrigin(origins = "http://localhost:3000")

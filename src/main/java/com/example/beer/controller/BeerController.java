@@ -3,6 +3,8 @@ package com.example.beer.controller;
 import com.example.beer.component.Mapper;
 import com.example.beer.model.Beer;
 import com.example.beer.model.BeerDTO;
+import com.example.beer.model.Receipt;
+import com.example.beer.model.ReceiptItem;
 import com.example.beer.service.BeerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +51,10 @@ public class BeerController {
         System.out.println("DELETED BEER ON ID: "+id);
     }
 
-
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping("/add-beer")
+    public Beer addBeer(@RequestBody Beer beer){
+        return service.addBeer(beer);
+    }
 
 }

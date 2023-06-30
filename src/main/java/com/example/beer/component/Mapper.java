@@ -12,8 +12,9 @@ public class Mapper {
     }
 
     public ReceiptDTO toDto(Receipt r) {
-        return new ReceiptDTO(r.getId(),r.getUserID(),r.getDate(),r.getTotalPrice(),r.getBeerIDs());
+        return new ReceiptDTO(r.getId(),r.getUserID(),r.getDate(),r.getTotalPrice(),r.getItems());
     }
+
 
     public UserDTO toDto(User u) {
         return new UserDTO(u.getId(), u.getFirstname(), u.getLastname(), u.getEmail(), u.getRole(),u.getTokens());

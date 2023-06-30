@@ -17,5 +17,5 @@ public class ReceiptDTO {
     private Long userID;
     private Date date;
     private double totalPrice;
-    private List<Long> beerIDs;
+    private List<ReceiptItem> items;
 }
